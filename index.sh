@@ -1,6 +1,10 @@
 #!bin/bash 
 
-#This is a script to change proxy in Linux
+# This is a script to change proxy in Linux
+
+
+# Made by "Hritik Gupta"
+# For ProxyBud "https://github.com/hritikgupta/ProxyBud"
 
 FILE="\desktop\rou.txt"
 RED='\033[0;31m'
@@ -34,7 +38,7 @@ echo "What'd you like to do?\n ${BLUE}| 1 |${NC} ${LBLUE}Set Proxy${NC}\n ${BLUE
 read choice
 
 
-#************************************************************
+#************************************************************begins
 
 # reads host and port from user
 if [ $choice = 1 ]; then
