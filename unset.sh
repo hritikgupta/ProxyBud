@@ -27,7 +27,7 @@ forUnGit(){
 
 git --version 2>&1 >/dev/null 
 git_avail=$?
-# cheks if git is installed and returns 0 if installed
+# checks if git is installed and returns 0 if installed
 if [ $git_avail -eq 0 ]; then 
 	forUnGit
 	else
