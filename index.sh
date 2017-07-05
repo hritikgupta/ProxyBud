@@ -9,7 +9,9 @@ LGREEN='\033[1;32m'
 YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 LBLUE='\033[1;34m'
+DGRAY='\033[1;30m'
 NC='\033[0m' # No Color
+
 
 clear
 echo "\n\t\c"
@@ -24,7 +26,8 @@ for i in `seq 0 27`;do
 
 # takes input from user
 user="$USER"
-echo "\n\nHello, "$USER"\nThis script will change your system proxy.\n\n"
+echo "\n\nHello, "$USER"\nThis script will change your system proxy. \nModifications will be made to :
+${DGRAY}bashrc    apt.conf    environment-variable    network proxy    git\n${NC}"
 
 echo "What'd you like to do?\n ${BLUE}| 1 |${NC} ${LBLUE}Set Proxy${NC}\n ${BLUE}| 2 |${NC} ${LBLUE}Unset Proxy${NC}\nInput : \c"
 read choice
@@ -72,5 +75,5 @@ if [ $choice = 1 ]; then
 
 fi
 
-echo ""
-echo "${YELLOW}★${NC} Star it, if you like it : \n"
+echo "Done! Thanks for using ${GREEN}ProxyBud${NC}."
+echo "${YELLOW}★${NC} Star it, if you like it :  ${LBLUE}\033[4mhttps://github.com/hritikgupta/ProxyBud\033[0m${NC}\n"

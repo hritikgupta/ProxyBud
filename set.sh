@@ -30,7 +30,27 @@ export http_proxy=http://"$host":"$port"/
 export https_proxy=http://"$host":"$port"/
 export ftp_proxy=http://"$host":"$port"/
 
+forGit(){
+	git config --global http.proxy http://"$host":"$host"
+	git config --global https.proxy https://"$host":"$host"
+}
+
 # set proxy for git
-sudo apt-get install git &> /dev/null
-git config --global http.proxy http://"$host":"$host"
-git config --global https.proxy https://"$host":"$host"
+# checks if git is installed
+git --version 2>&1 >/dev/null 
+git_avail=$?
+# checks if git is installed and returns 0 if installed
+if [ $git_avail -eq 0 ]; then 
+	forGit
+else
+	wget -q --spider http://google.com
+	# checks if system is online
+	if [ $? -eq 0 ]; then
+	    sudo apt-get install git &> /dev/null
+	    forGit
+		else
+	    	echo 'Offline' > /dev/null
+	fi
+fi
+
+

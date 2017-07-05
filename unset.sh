@@ -20,7 +20,17 @@ unset http_proxy
 unset https_proxy
 unset ftp_proxy
 
-# unset proxy for git
-sudo apt-get install git &> /dev/null
-git config --global --unset http.proxy
-git config --global --unset https.proxy
+forUnGit(){
+	git config --global --unset http.proxy
+	git config --global --unset https.proxy
+}
+
+git --version 2>&1 >/dev/null 
+git_avail=$?
+# cheks if git is installed and returns 0 if installed
+if [ $git_avail -eq 0 ]; then 
+	forUnGit
+	else
+		echo 'Do Nothing' >> /dev/null
+fi
+
