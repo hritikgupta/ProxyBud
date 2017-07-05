@@ -29,6 +29,7 @@ user="$USER"
 echo "\n\nHello, "$USER"\nThis script will change your system proxy. \nModifications will be made to :
 ${DGRAY}bashrc    apt.conf    environment-variable    network proxy    git\n${NC}"
 
+# inputs choice from the user
 echo "What'd you like to do?\n ${BLUE}| 1 |${NC} ${LBLUE}Set Proxy${NC}\n ${BLUE}| 2 |${NC} ${LBLUE}Unset Proxy${NC}\nInput : \c"
 read choice
 
