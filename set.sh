@@ -1,4 +1,15 @@
-#!bin/bash
+#!bin/bash 
+
+# This is a script to change proxy in Linux
+
+
+# Made by "Hritik Gupta"
+# For ProxyBud "https://github.com/hritikgupta/ProxyBud"
+
+# host = proxy host 
+# port = proxy port
+# configuration files modified: bashrc, apt, env/environment, gsettings, git
+
 
 host="$1"
 port="$2"
@@ -11,8 +22,7 @@ for proto in http https ftp; do
 
 
 # proxy for etc/environment
-printf "PATH="http_proxy=http://$host:$port/"\nPATH="https_proxy=https://$host:$port/"\nPATH="ftp_proxy=ftp://$host:$port/"\n" |
-		sudo tee -a /etc/environment > /dev/null
+printf "http_proxy="http://$host:$port"\nhttps_proxy="https://$host:$port"\nftp_proxy="ftp://$host:$port"\nHTTP_PROXY="http://$host:$port"\nHTTPS_PROXY="https://$host:$port"\nFTP_PROXY="ftp://$host:$port"\n" |	sudo tee -a /etc/environment > /dev/null
 
 # proxy for gnome settings
 gsettings set org.gnome.system.proxy mode manual
