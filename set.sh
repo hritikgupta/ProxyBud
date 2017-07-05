@@ -41,8 +41,8 @@ export https_proxy=http://"$host":"$port"/
 export ftp_proxy=http://"$host":"$port"/
 
 forGit(){
-	git config --global http.proxy http://"$host":"$host"
-	git config --global https.proxy https://"$host":"$host"
+	git config --global http.proxy "$host":"$port"
+	git config --global https.proxy "$host":"$port"
 }
 
 # set proxy for git
