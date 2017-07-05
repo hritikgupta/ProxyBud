@@ -2,7 +2,7 @@
 ---
 ### Let's you configure proxy on Linux
 #### How to use?
-1. Download the zip by clicking [here](https://github.com/hritikgupta/ProxyBud.git).
+1. Download the zip by clicking [here](https://github.com/hritikgupta/ProxyBud/archive/master.zip).
 2. Extract it and open the directory in terminal.
 3. Enter the following command: `sh index.sh`
 
