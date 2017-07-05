@@ -37,7 +37,7 @@ forGit(){
 
 # set proxy for git
 # checks if git is installed
-git --version 2>&1 >/dev/null 
+git --version 2>&1 >/dev/null
 git_avail=$?
 # checks if git is installed and returns 0 if installed
 if [ $git_avail -eq 0 ]; then 
