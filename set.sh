@@ -20,10 +20,9 @@ ftp_port="$6"
 
 
 # set proxy in aptitude
-for proto in http https ftp; do
-		    printf 'Acquire::%s::proxy "%s://%s:%u";\n' "$proto" "$proto" "$host" "$port"
-		done |
-		sudo tee -a /etc/apt/apt.conf > /dev/null
+printf "Acquire::http::proxy "http://$1:$2"" |sudo tee -a /etc/apt/apt.conf > /dev/null
+printf "\nAcquire::https::proxy "https://$3:$4"" |sudo tee -a /etc/apt/apt.conf > /dev/null
+printf "\nAcquire::ftp::proxy "ftp://$5:$6"" |sudo tee -a /etc/apt/apt.conf > /dev/null
 
 
 # proxy for etc/environment
