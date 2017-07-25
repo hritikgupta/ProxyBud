@@ -47,6 +47,21 @@ if [ $choice = 1 ]; then
 	echo "${RED}Proxy Port and press [Enter]: ${NC}\c"
 	read port		
 
+	echo "${YELLOW}Use the same proxy for https and ftp?(y/n) ${NC}\c"
+	read char
+
+	if [ $char = 'n' ];then
+		echo "${RED}Proxy Host for HTTPS : ${NC}\c"
+		read shost
+		echo "${RED}Proxy Port for HTTPS : ${NC}\c"
+		read sport
+		echo "${RED}Proxy Host for FTP : ${NC}\c"
+		read fhost
+		echo "${RED}Proxy Port for FTP : ${NC}\c"
+		read fport
+		
+	fi
+
 
 	# gets the default shell of the system
 	S="$SHELL"
@@ -57,18 +72,11 @@ if [ $choice = 1 ]; then
 	S2="/usr/bin/fish"
 
 	if [ $S = $S1 ]; then
-		bash set.sh "$prox" "$port" 
-
-		else if [ $S = $S2 ];then
-
-			# do something for fish 
-			# doesn't work right now
-			set http_proxy "http://"$prox":"$port"" 
-			set https_proxy "https://"$prox":"$port""
-			set ftp_proxy="http://"$prox":"$port"/" 
-			# writes proxy to the apt.conf file for terminal 
-			bash set.sh "$prox" "$port"
-		fi
+		if [ $char = 'y' ];then
+			bash set.sh "$prox" "$port" "$prox" "$port" "$prox" "$port" 
+		elif [ $char = 'n' ];then
+			bash set.sh "$prox" "$port" "$shost" "$sport" "$fhost" "$fport"
+		
 	fi
 
 	elif [ $choice = 2 ]; then
