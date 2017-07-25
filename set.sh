@@ -11,8 +11,13 @@
 # configuration files modified: bashrc, apt, env/environment, gsettings, git
 
 
-host="$1"
-port="$2"
+http_host="$1"
+http_port="$2"
+https_host="$3"
+https_port="$4"
+ftp_host="$5"
+ftp_port="$6"
+
 
 # set proxy in aptitude
 for proto in http https ftp; do
@@ -22,27 +27,27 @@ for proto in http https ftp; do
 
 
 # proxy for etc/environment
-printf "http_proxy="http://$host:$port"\nhttps_proxy="https://$host:$port"\nftp_proxy="ftp://$host:$port"\nHTTP_PROXY="http://$host:$port"\nHTTPS_PROXY="https://$host:$port"\nFTP_PROXY="ftp://$host:$port"\n" |	sudo tee -a /etc/environment > /dev/null
+printf "http_proxy="http://$1:$2"\nhttps_proxy="https://$3:$4"\nftp_proxy="ftp://$5:$6"\nHTTP_PROXY="http://$1:$2"\nHTTPS_PROXY="https://$3:$4"\nFTP_PROXY="ftp://$5:$6"\n" |	sudo tee -a /etc/environment > /dev/null
 
 # proxy for gnome settings
 gsettings set org.gnome.system.proxy mode manual
-gsettings set org.gnome.system.proxy.http host "$host"
-gsettings set org.gnome.system.proxy.http port "$port"
-gsettings set org.gnome.system.proxy.https host "$host"
-gsettings set org.gnome.system.proxy.https port "$port"
-gsettings set org.gnome.system.proxy.ftp host "$host"
-gsettings set org.gnome.system.proxy.ftp port "$port"
-gsettings set org.gnome.system.proxy.socks host "$host"
-gsettings set org.gnome.system.proxy.socks port "$port"
+gsettings set org.gnome.system.proxy.http host "$1"
+gsettings set org.gnome.system.proxy.http port "$2"
+gsettings set org.gnome.system.proxy.https host "$3"
+gsettings set org.gnome.system.proxy.https port "$4"
+gsettings set org.gnome.system.proxy.ftp host "$5"
+gsettings set org.gnome.system.proxy.ftp port "$6"
+gsettings set org.gnome.system.proxy.socks host "$1"
+gsettings set org.gnome.system.proxy.socks port "$2"
 
 # proxy for bashrc
-export http_proxy=http://"$host":"$port"/
-export https_proxy=http://"$host":"$port"/
-export ftp_proxy=http://"$host":"$port"/
+export http_proxy=http://"$1":"$2"/
+export https_proxy=http://"$3":"$4"/
+export ftp_proxy=http://"$5":"$6"/
 
 forGit(){
-	git config --global http.proxy "$host":"$port"
-	git config --global https.proxy "$host":"$port"
+	git config --global http.proxy "$1":"$2"
+	git config --global https.proxy "$3":"$4"
 }
 
 # set proxy for git
