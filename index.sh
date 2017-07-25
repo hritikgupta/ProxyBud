@@ -59,7 +59,6 @@ if [ $choice = 1 ]; then
 		read fhost
 		echo "${RED}Proxy Port for FTP : ${NC}\c"
 		read fport
-		
 	fi
 
 
@@ -71,14 +70,15 @@ if [ $choice = 1 ]; then
 	S1="/bin/bash"
 	S2="/usr/bin/fish"
 
-	if [ $S = $S1 ]; then
-		if [ $char = 'y' ];then
-			bash set.sh "$prox" "$port" "$prox" "$port" "$prox" "$port" 
-		elif [ $char = 'n' ];then
-			bash set.sh "$prox" "$port" "$shost" "$sport" "$fhost" "$fport"
-		
+	if [ $S = $S1 ] ; then
+		if [ $char = 'y'  ] ; then
+             	bash set.sh "$prox" "$port" "$prox" "$port" "$prox" "$port" 
+        else         
+            if [ $char = 'n' ] ; then
+                bash set.sh "$prox" "$port" "$shost" "$sport" "$fhost" "$fport"
+            fi   
+        fi
 	fi
-
 	elif [ $choice = 2 ]; then
 		echo "You've chosen to unset!\n"
 		bash unset.sh 
