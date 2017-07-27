@@ -20,9 +20,7 @@ ftp_port="$6"
 
 
 # set proxy in aptitude
-printf "Acquire::http::proxy "http://$1:$2"" |sudo tee -a /etc/apt/apt.conf > /dev/null
-printf "\nAcquire::https::proxy "https://$3:$4"" |sudo tee -a /etc/apt/apt.conf > /dev/null
-printf "\nAcquire::ftp::proxy "ftp://$5:$6"" |sudo tee -a /etc/apt/apt.conf > /dev/null
+bash apt.sh "$http_host" "$http_port" "$https_host" "$https_port" "$ftp_host" "$ftp_port"
 
 
 # proxy for etc/environment
@@ -45,8 +43,8 @@ export https_proxy=http://"$3":"$4"/
 export ftp_proxy=http://"$5":"$6"/
 
 forGit(){
-	git config --global http.proxy "$1":"$2"
-	git config --global https.proxy "$3":"$4"
+	git config --global http.proxy "$https_host":"$http_port"
+	git config --global https.proxy "$https_host":"$https_port"
 }
 
 # set proxy for git

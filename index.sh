@@ -1,4 +1,4 @@
-#!bin/bash 
+#!/bin/bash 
 
 # This is a script to change proxy in Linux
 
@@ -6,87 +6,71 @@
 # Made by "Hritik Gupta"
 # For ProxyBud "https://github.com/hritikgupta/ProxyBud"
 
-FILE="\desktop\rou.txt"
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-LGREEN='\033[1;32m'
-YELLOW='\033[1;33m'
-BLUE='\033[0;34m'
-LBLUE='\033[1;34m'
-DGRAY='\033[1;30m'
-NC='\033[0m' # No Color
 
+finalGreet(){
+	whiptail --title "** SUCCESS **" --msgbox "Thanks for using PROXYBUD.\n\nStar it, if you liked it : https://github.com/hritikgupta/ProxyBud" 10 78
+}
 
-clear
-echo "\n\t\c"
-for i in `seq 0 27`;do
-        echo "${LGREEN}*${NC}\c"
-    done 
-echo "\t\n${GREEN}\t PROXYBUD - Sets your proxy${NC}\t";
-echo "\t\c"
-for i in `seq 0 27`;do
-        echo "${LGREEN}*${NC}\c"
-    done 
+whiptail --title "** PROXYBUD **" --yesno "Hello, $USER\nLet's change your system proxy. Modifications will be made to :
 
-# takes input from user
-user="$USER"
-echo "\n\nHello, "$USER"\nThis script will change your system proxy. \nModifications will be made to :
-${DGRAY}bashrc    apt.conf    environment-variable    network proxy    git\n${NC}"
+    bashrc    apt.conf    environment-variable    network proxy    git
 
-# inputs choice from the user
-echo "What'd you like to do?\n ${BLUE}| 1 |${NC} ${LBLUE}Set Proxy${NC}\n ${BLUE}| 2 |${NC} ${LBLUE}Unset Proxy${NC}\nInput : \c"
-read choice
-
-
-#************************************************************begins
-
-# reads host and port from user
-if [ $choice = 1 ]; then
-	echo "${RED}Proxy Host and press [Enter]: ${NC}\c"
-	read prox
-	echo "${RED}Proxy Port and press [Enter]: ${NC}\c"
-	read port		
-
-	echo "${YELLOW}Use the same proxy for https and ftp?(y/n) ${NC}\c"
-	read char
-
-	if [ $char = 'n' ];then
-		echo "${RED}Proxy Host for HTTPS : ${NC}\c"
-		read shost
-		echo "${RED}Proxy Port for HTTPS : ${NC}\c"
-		read sport
-		echo "${RED}Proxy Host for FTP : ${NC}\c"
-		read fhost
-		echo "${RED}Proxy Port for FTP : ${NC}\c"
-		read fport
-	fi
-
-
-	# gets the default shell of the system
-	S="$SHELL"
-
-	# used for comparing shells being used
-	# currently works for bash and fish
-	S1="/bin/bash"
-	S2="/usr/bin/fish"
-
-	if [ $S = $S1 ] ; then
-		if [ $char = 'y'  ] ; then
-             	bash set.sh "$prox" "$port" "$prox" "$port" "$prox" "$port" 
-        else         
-            if [ $char = 'n' ] ; then
-                bash set.sh "$prox" "$port" "$shost" "$sport" "$fhost" "$fport"
-            fi   
-        fi
-	fi
-	elif [ $choice = 2 ]; then
-		echo "You've chosen to unset!\n"
-		bash unset.sh 
-			 	
- 	else
- 		echo '\nWrong choice! Try again.\n'
-
+Start the program?" 12 78
+ 
+exitstatus=$?
+if [ $exitstatus = 0 ]; then
+    status="0"
+    while [ "$status" -eq 0 ]  
+    do
+        CHOICE=$(
+		whiptail --title "** PROXYBUD **" --menu "\n\nMake your choice : \n" 16 78 6 \
+			"1)" "Set Proxy"   \
+			"2)" "Unset Proxy"  3>&2 2>&1 1>&3	
+		)
+         
+        case $CHOICE in
+        		"1)") 
+                	prox=$(whiptail --inputbox "Enter Proxy Host : " 8 78 --title "Input" 3>&1 1>&2 2>&3)
+                	port=$(whiptail --inputbox "Enter Proxy Port : " 8 78 --title "Input" 3>&1 1>&2 2>&3)
+                	whiptail --title "Prompt" --yesno "Use the same proxy for https/ftp?" 8 78 
+					exitstatus=$?
+					if [ $exitstatus = 0 ]; then
+						if [ "$(id -nu)" != "root" ]; then
+						    sudo -k
+						    pass=$(whiptail --title " Sudo access required " --passwordbox "Please authenticate to begin: \n\n[sudo] Password for user $USER:" 12 50 3>&2 2>&1 1>&3-)
+						fi
+						finalGreet
+						exec sudo -S -p '' "bash" "set.sh" <<< "$pass" "$prox" "$port" "$prox" "$port" "$prox" "$port" 
+					else
+					    shost=$(whiptail --inputbox "Enter Proxy Host for HTTPS: " 8 78 --title "Input" 3>&1 1>&2 2>&3)
+                		sport=$(whiptail --inputbox "Enter Proxy Port for HTTPS: " 8 78 --title "Input" 3>&1 1>&2 2>&3)
+                		fhost=$(whiptail --inputbox "Enter Proxy Host for FTP: " 8 78 --title "Input" 3>&1 1>&2 2>&3)
+                		fport=$(whiptail --inputbox "Enter Proxy Port for FTP: " 8 78 --title "Input" 3>&1 1>&2 2>&3)
+                		if [ "$(id -nu)" != "root" ]; then
+						    sudo -k
+						    pass=$(whiptail --title " Sudo access required " --passwordbox "Please authenticate to begin: \n\n[sudo] Password for user $USER:" 12 50 3>&2 2>&1 1>&3-)
+						fi
+						finalGreet
+						exec sudo -S -p '' "bash" "set.sh" <<< "$pass" "$prox" "$port" "$shost" "$sport" "$fhost" "$fport"
+					fi
+            ;;
+            	"2)")
+                	whiptail --title "Testing" --msgbox "You have chosen to unset proxy!" 8 78
+                	if [ "$(id -nu)" != "root" ]; then
+						    sudo -k
+						    pass=$(whiptail --title " Sudo access required " --passwordbox "Please authenticate to begin: \n\n[sudo] Password for user $USER:" 12 50 3>&2 2>&1 1>&3-)
+						fi
+						finalGreet
+						exec sudo -S -p '' "bash" "unset.sh" <<< "$pass" 
+            ;;
+            *) whiptail --title "Testing" --msgbox "You cancelled or have finished." 8 78
+                status=1
+                exit
+            ;;
+        esac
+        exitstatus1=$status1
+    done
+else
+    whiptail --title "Testing" --msgbox "You chose not to start." 8 78
+    exit
 fi
-
-echo "Done! Thanks for using ${GREEN}ProxyBud${NC}."
-echo "${YELLOW}★${NC} Star it, if you like it :  ${LBLUE}\033[4mhttps://github.com/hritikgupta/ProxyBud\033[0m${NC}\n"
