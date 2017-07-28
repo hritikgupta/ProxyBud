@@ -1,6 +1,6 @@
 #!/bin/bash 
 
-# This is a script to change proxy in Linux
+# This is a script to change proxy in Linux.
 
 
 # Made by "Hritik Gupta"

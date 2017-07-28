@@ -6,8 +6,6 @@
 # Made by "Hritik Gupta"
 # For ProxyBud "https://github.com/hritikgupta/ProxyBud"
 
-# host = proxy host 
-# port = proxy port
 # configuration files modified: bashrc, apt, env/environment, gsettings, git
 
 
